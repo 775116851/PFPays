@@ -22,6 +22,7 @@ namespace PFPays
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            int a = 1;
             //X509Certificate2 pc = new X509Certificate2(@"D:/182000899000001_01.pfx", "123456", X509KeyStorageFlags.MachineKeySet);
             ////return BigNum.ToDecimalStr(BigNum.ConvertFromHex(pc.SerialNumber)); 低于4.0版本的.NET请使用此方法
             ////return BigInteger.Parse(pc.SerialNumber, System.Globalization.NumberStyles.HexNumber).ToString();
@@ -91,4 +92,5 @@ namespace PFPays
             Console.Read(); 
         }
     }
+
 }
