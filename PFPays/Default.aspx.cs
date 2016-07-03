@@ -18,6 +18,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Collections.Specialized;
 using log4net;
 using LitJson;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Utilities.Encoders;
+using Org.BouncyCastle.Math;
 
 namespace PFPays
 {
@@ -26,16 +29,18 @@ namespace PFPays
         private static readonly ILog _log = log4net.LogManager.GetLogger(typeof(Default));
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             _log.Info("测试");
             //X509Certificate2 pc = new X509Certificate2(@"D:/182000899000001_01.pfx", "123456", X509KeyStorageFlags.MachineKeySet);
             ////return BigNum.ToDecimalStr(BigNum.ConvertFromHex(pc.SerialNumber)); 低于4.0版本的.NET请使用此方法
             ////return BigInteger.Parse(pc.SerialNumber, System.Globalization.NumberStyles.HexNumber).ToString();
             //Org.BouncyCastle.Math.BigInteger mod = new Org.BouncyCastle.Math.BigInteger(pc.GetSerialNumberString(), 16);
-            string m = "123333333333333333333333333333333333333333333333333333333333333333333333333333333333333333344444444444444444444444444FFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGG";
-            string sign = Cmn.GetSign(m);
-            bool f = Cmn.ValitedSign(sign, m);
-            int a = 0;
+            //string m = "123333333333333333333333333333333333333333333333333333333333333333333333333333333333333333344444444444444444444444444FFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGGG";
+            //string sign = Cmn.GetSign(m);
+            //bool f = Cmn.ValitedSign(sign, m);
+            //int a = 0;
+
+            //Org.BouncyCastle.Crypto.Parameters.RsaPrivateCrtKeyParameters)privateKey
+
 
             //RSA密钥对的构造器 
             RsaKeyPairGenerator keyGenerator = new RsaKeyPairGenerator();
@@ -48,6 +53,7 @@ namespace PFPays
             //用参数初始化密钥构造器 
             keyGenerator.Init(param);
             //产生密钥对 
+            string input = "popozh RSA test";
             AsymmetricCipherKeyPair keyPair = keyGenerator.GenerateKeyPair();
             //获取公钥和密钥 
             AsymmetricKeyParameter publicKey = keyPair.Public;
@@ -56,11 +62,18 @@ namespace PFPays
             {
                 Console.WriteLine("failed key generation (1024) length test");
             }
+            Org.BouncyCastle.Crypto.Parameters.RsaKeyParameters pu = (Org.BouncyCastle.Crypto.Parameters.RsaKeyParameters)publicKey;
+            Org.BouncyCastle.Crypto.Parameters.RsaPrivateCrtKeyParameters pr = (Org.BouncyCastle.Crypto.Parameters.RsaPrivateCrtKeyParameters)privateKey;
+
+            //加密
+            string mSign = GetSign(input, pr);
+            //解密
+            bool isPass = ValitedSign(mSign, input, pu);
+            return;
             //一个测试…………………… 
             //输入，十六进制的字符串，解码为byte[] 
             //string input = "4e6f77206973207468652074696d6520666f7220616c6c20676f6f64206d656e"; 
             //byte[] testData = Org.BouncyCastle.Utilities.Encoders.Hex.Decode(input);  
-            string input = "popozh RSA test";
             byte[] testData = Encoding.UTF8.GetBytes(input);
             Console.WriteLine("明文:" + input + Environment.NewLine);
             //非对称加密算法，加解密用 
@@ -95,6 +108,96 @@ namespace PFPays
                 Console.WriteLine("解密成功");
             }
             Console.Read(); 
+        }
+
+        public static string GetSign(string jsonContent, RsaPrivateCrtKeyParameters pr)
+        {
+            // MD5计算
+            string SignMD5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(jsonContent, "MD5").ToUpper();
+
+            // SHA1计算
+            string SignSHA1 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(SignMD5, "SHA1");
+
+            // Rsa计算
+            //Org.BouncyCastle.Math.BigInteger mod = new Org.BouncyCastle.Math.BigInteger(sMod, 16);
+            //Org.BouncyCastle.Math.BigInteger pubExp = new Org.BouncyCastle.Math.BigInteger(sPubExp, 16);
+            //Org.BouncyCastle.Math.BigInteger privExp = new Org.BouncyCastle.Math.BigInteger(sPrivExp, 16);
+            //Org.BouncyCastle.Math.BigInteger p = new Org.BouncyCastle.Math.BigInteger(sP, 16);
+            //Org.BouncyCastle.Math.BigInteger q = new Org.BouncyCastle.Math.BigInteger(sQ, 16);
+            //Org.BouncyCastle.Math.BigInteger pExp = new Org.BouncyCastle.Math.BigInteger(sPExp, 16);
+            //Org.BouncyCastle.Math.BigInteger qExp = new Org.BouncyCastle.Math.BigInteger(sQExp, 16);
+            //Org.BouncyCastle.Math.BigInteger crtCoef = new Org.BouncyCastle.Math.BigInteger(sCrtCoef, 16);
+
+            //RsaKeyParameters pubParameters = new RsaKeyParameters(false, mod, pubExp);
+            //RsaKeyParameters privParameters = new RsaPrivateCrtKeyParameters(mod, pubExp, privExp, p, q, pExp, qExp, crtCoef);
+
+            RsaKeyParameters pubParameters = new RsaKeyParameters(false, pr.Modulus, pr.PublicExponent);
+            RsaKeyParameters privParameters = new RsaPrivateCrtKeyParameters(pr.Modulus, pr.PublicExponent, pr.Exponent, pr.P, pr.Q, pr.DP, pr.DQ, pr.QInv);
+
+            byte[] digInfo = System.Text.Encoding.Default.GetBytes(SignSHA1);
+
+            ISigner rawSig = SignerUtilities.GetSigner("RSA");
+            rawSig.Init(true, privParameters);
+            rawSig.BlockUpdate(digInfo, 0, digInfo.Length);
+            // Sign签名
+            byte[] rawResult = rawSig.GenerateSignature();
+
+            // 十六进制计算
+            string SignRSA = byteToHexStr(rawResult).ToUpper();
+
+            return SignRSA;
+        }
+
+        public static string byteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("X2");
+                }
+            }
+            return returnStr;
+        }
+
+        public static bool ValitedSign(string sign, string data, RsaKeyParameters pu)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(sign) || string.IsNullOrEmpty(data))
+                    return false;
+
+                //// Rsa计算
+                //Org.BouncyCastle.Math.BigInteger mod = new Org.BouncyCastle.Math.BigInteger("", 16);
+                //Org.BouncyCastle.Math.BigInteger pubExp = new Org.BouncyCastle.Math.BigInteger("", 16);
+                //RsaKeyParameters pubParameters = new RsaKeyParameters(false, mod, pubExp);
+
+                RsaKeyParameters pubParameters = new RsaKeyParameters(false, pu.Modulus, pu.Exponent);
+
+                byte[] rawResult = Hex.Decode(sign);
+
+                // MD5计算
+                string SignMD5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(data, "MD5").ToUpper();
+
+                // SHA1计算
+                string SignSHA1 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(SignMD5, "SHA1");
+
+                byte[] digInfo = System.Text.Encoding.Default.GetBytes(SignSHA1);
+
+                // Rsa验签
+                ISigner rawSig = SignerUtilities.GetSigner("RSA");
+                rawSig.Init(false, pubParameters);
+                rawSig.BlockUpdate(digInfo, 0, digInfo.Length);
+
+                bool result = rawSig.VerifySignature(rawResult);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public void Test()

@@ -27,17 +27,26 @@ namespace PFPays
             // SHA1计算
             string SignSHA1 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(SignMD5, "SHA1");
 
-            X509Certificate2 pc = new X509Certificate2(@"D:/182000899000001_01.pfx", "123456", X509KeyStorageFlags.MachineKeySet);
-            string sTR = pc.GetSerialNumberString();
+            //X509Certificate2 pc = new X509Certificate2(@"D:/182000899000001_01.pfx", "123456", X509KeyStorageFlags.MachineKeySet);
+            //string sTR = pc.GetSerialNumberString();
+            string sMod = "qyMTTzy5Qurd3hz8HxFcQcjXx/7FM5/Ina305TDVWgmLqZ3n/PpN5fVRg2l76AbrOw9dpahIke9vWMuSXvOFQ2zTdnv6eBNtKV2Q375XGhXSM5XEBAgZI6gpSHEHr7ebzZlBDOLTPQpbfoAx60YY+gWScyH1//XiE00wkgIhJNM=";
+            string sPubExp = "AQAB";
+            string sPrivExp = "ADUx+IrmhzEQx43/XOxc8bpPCQpQmbf8jrS7N5BkYqlWWgSLVHmGELCq6MAWlBIEDqqKz66OFkFj7cimLxElkjeZYRJnBBeI7wo2o4pCopKbTHb1Lj8BGGrXkR28hmQcqkLRIzUkCqIfrSQOKcwhURiDflEH/YVMwVZQy/vIj8E=";
+            string sP = "7M2gh8ERIQcP9e8x2+u3veBQt/YQTbjMWT/XtaCt/GAICUp38Z5SZcVlFSl4L6pJ+Tqmtb92Gk7Bx0dljGHTsw==";
+            string sQ = "uQKtuMbE/DB7CNFS1fxuqAJ7WmDzPnkg0ZtKvb1+0DRSkAMmQjN2L0HAWbXVWy1lo5L+Bg22xvp43KMsS1FaYQ==";
+            string sPExp = "vVqL9CHhBYz1KU5UiyvI6G8XfJKpZMzRsshHP/g1R+quYmeG09EqyDB47NwVO+AqeL16kzh/QvgZIbWosQGE2w==";
+            string sQExp = "VtopD6tQYkuoFpWd25Lrp7eyjNUim9tlSsEqLzS8SaWmdLDlzwI1oy2szPCNvoXrRwUEd3cMrRB8mKeJbbo9QQ==";
+            string sCrtCoef = "ovpQuiGd8zx51hTB6rRwb2Frk4Iy/wQW7QJag0v9yE1tqgXUc3xaCg1BNKCcUJNSLlJ3I0uxeZqsoQg7VXK1pQ==";
+
             // Rsa计算
-            Org.BouncyCastle.Math.BigInteger mod = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger pubExp = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger privExp = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger p = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger q = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger pExp = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger qExp = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
-            Org.BouncyCastle.Math.BigInteger crtCoef = new Org.BouncyCastle.Math.BigInteger(sTR, 16);
+            Org.BouncyCastle.Math.BigInteger mod = new Org.BouncyCastle.Math.BigInteger(sMod, 16);
+            Org.BouncyCastle.Math.BigInteger pubExp = new Org.BouncyCastle.Math.BigInteger(sPubExp, 16);
+            Org.BouncyCastle.Math.BigInteger privExp = new Org.BouncyCastle.Math.BigInteger(sPrivExp, 16);
+            Org.BouncyCastle.Math.BigInteger p = new Org.BouncyCastle.Math.BigInteger(sP, 16);
+            Org.BouncyCastle.Math.BigInteger q = new Org.BouncyCastle.Math.BigInteger(sQ, 16);
+            Org.BouncyCastle.Math.BigInteger pExp = new Org.BouncyCastle.Math.BigInteger(sPExp, 16);
+            Org.BouncyCastle.Math.BigInteger qExp = new Org.BouncyCastle.Math.BigInteger(sQExp, 16);
+            Org.BouncyCastle.Math.BigInteger crtCoef = new Org.BouncyCastle.Math.BigInteger(sCrtCoef, 16);
 
             RsaKeyParameters pubParameters = new RsaKeyParameters(false, mod, pubExp);
             RsaKeyParameters privParameters = new RsaPrivateCrtKeyParameters(mod, pubExp, privExp, p, q, pExp, qExp, crtCoef);
