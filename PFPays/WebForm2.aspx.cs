@@ -9,6 +9,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Utilities.Encoders;
+using System.Text;
 
 namespace PFPays
 {
@@ -43,13 +44,30 @@ namespace PFPays
             //string ppu = "EEE81E52267060718526F25F035175E924434A465DA4E9558E5A67C1168137193D9087FC83E21F39CEE713D3E3BF994529B962486E815203575C46802CAD7D7F2B2838A754DE4CCF4E49683AC521FDBC03CA333C9DB4B0336355F0423D871DA337F1F5784BF2AB51F59E4DB0733FB653FF02AD65A590D070AA7D1AC3EF7E516D8114537C87887236DC1F821B7469C330E373C331655EF245524CAB4B3F798A7E9671AE91B35746FA5377EEFFEF341C93";
             byte[] returnBytes = new byte[lpu.Length / 2];
             for (int i = 0; i < returnBytes.Length; i++)
+            {
                 returnBytes[i] = Convert.ToByte(lpu.Substring(i * 2, 2), 16);
+            }
 
-            return;
+
+            StringBuilder sbData = new StringBuilder();
+            sbData.Clear();
+            sbData.Append("{'serviceCode':'").Append("031001002107061").Append("'");//一级商户代码
+            sbData.Append(",'bigOrderNo':'").Append("2016062900000001").Append("'");//总订单号
+            sbData.Append(",'bigReqNo':'").Append("2016062900000001").Append("'");//总订单请求流水号
+            sbData.Append("}");
+
+            PostService ps = new PostService();
+            jsonContent = sbData.ToString().Trim();
+
             //加密
             string mSign = GetSign(jsonContent, privateKeyParam);
+            ps.Add("data", jsonContent);
+            ps.Add("sign", mSign);
+            ps.Url = "https://222.44.42.5/paycashier/account/queryOrderStatus.do";
+            ps.Post();
+            //string result = ps.SendHttpPost();
             //解密
-            bool isPass = ValitedSign(mSign, jsonContent, publicKeyParam);
+            //bool isPass = ValitedSign(mSign, jsonContent, publicKeyParam);
         }
 
         public static string GetSign(string jsonContent, RsaPrivateCrtKeyParameters pr)
