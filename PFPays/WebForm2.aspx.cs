@@ -61,7 +61,7 @@ namespace PFPays
             ps.Post();
             //string result = ps.SendHttpPost();
             //解密
-            bool isPass = ValitedSign(mSign, jsonContent, pulickKeyL);//publicKeyParam
+            bool isPass = ValitedSign(mSign, jsonContent, publicKeyParam);//publicKeyParam
         }
 
         public static string GetSign(string jsonContent, RsaPrivateCrtKeyParameters pr)
