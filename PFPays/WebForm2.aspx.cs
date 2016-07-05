@@ -58,8 +58,10 @@ namespace PFPays
             ps.Add("data", jsonContent);
             ps.Add("sign", mSign);
             ps.Url = "https://222.44.42.5/paycashier/account/queryOrderStatus.do";
-            ps.Post();
-            //string result = ps.SendHttpPost();
+            //ps.Post();
+            string result = ps.SendHttpPost();
+            //string pData = ps.GetHtmlString();
+            //string pResult = ps.Po(pData);
             //解密
             bool isPass = ValitedSign(mSign, jsonContent, publicKeyParam);//publicKeyParam
         }
