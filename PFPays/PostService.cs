@@ -99,6 +99,29 @@ namespace PFPays
             return html;
         }
 
+        public string PFPost(string postData)
+        {
+            ServicePointManager.ServerCertificateValidationCallback = ValidateServerCertificate;  
+            Encoding encoding = Encoding.UTF8;
+            byte[] data = encoding.GetBytes(postData.Trim());
+            System.Net.HttpWebRequest req = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(Url);
+            req.Method = "POST";
+            //req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentType = "application/json";
+            //req.ContentType = "text/html";
+
+            req.ContentLength = data.Length;
+
+            System.IO.Stream newStream = req.GetRequestStream();
+            //发送数据   
+            newStream.Write(data, 0, data.Length);
+            newStream.Close();
+
+            System.Net.HttpWebResponse res = (System.Net.HttpWebResponse)req.GetResponse();
+            StreamReader reader = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
+            return reader.ReadToEnd();
+        }
+
         public string Po(string postData)
         {
             //基础连接已经关闭: 未能为SSL/TLS 安全通道建立信任关系。

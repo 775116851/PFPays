@@ -55,7 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rd\Newtonsoft.Json.Net20.dll</HintPath>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -79,6 +81,7 @@
     <Content Include="3rd\log4net.dll" />
     <Content Include="3rd\Newtonsoft.Json.Net20.dll" />
     <Content Include="Default.aspx" />
+    <Content Include="PFTest.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm2.aspx" />
   </ItemGroup>
@@ -90,6 +93,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PFTest.aspx.cs">
+      <DependentUpon>PFTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PFTest.aspx.designer.cs">
+      <DependentUpon>PFTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
