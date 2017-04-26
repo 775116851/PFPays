@@ -30,6 +30,8 @@ namespace PFPays
         private static readonly ILog _log = log4net.LogManager.GetLogger(typeof(PFTest));
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             StringBuilder sSL = new StringBuilder();
             DateTime dtTime = DateTime.Now;
             string rOrderNo = "R" + "20000000123456789" + "_" + dtTime.ToString("yyyyMMddHHmmss");
@@ -108,8 +110,8 @@ namespace PFPays
             string lpu = "B370EADE37A94E74E522237CF2F1AF5930E3833E0E1E6F7A781143985C50AA2C8A84490004AC7C608BCFE14636CB31A29B262B7BFF2FA8192C1F2E0A6A2E5C3078B562A02A4B121C4F4480ACB72E42FE39F02792D61A9286B4FFDD084EB7488C7AAC137AAB7E5FFF3689741E1396ECCD44F7E5B3470B4D79323EBCAABE78F4B6ACBC3404B8C632E01F1BE3A0B9EF72A961589943DC41A503706441E61108F8887BDCD69213D1536CBB43E272DCE69309";
             string pfLpu = "EEE81E52267060718526F25F035175E924434A465DA4E9558E5A67C1168137193D9087FC83E21F39CEE713D3E3BF994529B962486E815203575C46802CAD7D7F2B2838A754DE4CCF4E49683AC521FDBC03CA333C9DB4B0336355F0423D871DA337F1F5784BF2AB51F59E4DB0733FB653FF02AD65A590D070AA7D1AC3EF7E516D8114537C87887236DC1F821B7469C330E373C331655EF245524CAB4B3F798A7E9671AE91B35746FA5377EEFFEF341C93";
 
-            pr = "MIIDTQIBADANBgkqhkiG9w0BAQEFAASCAzcwggMzAgEAAoGxAJl7xSSvTEMJ6EnyD55hKnrYuFTWGdBW7LRJUt37YqF3NsiiaYDRBLGWL5gfFrkqU81KJ6Q+tMxBWfGYnPW7zNUBIAqL2/hFcXhfmfF6uQPYTEsmi2urYrovCsLJbciYWLTK4nKhYfAT7th3om9n1M7MdQoOrZzt9g0t6gc9Hl+C8xfn6t4V8O78dp0w9ix+mBpA4Tw29V5vWQkl6sm+yoeNV562sYZVJcOj22XQZ9BnAgEDAoGwZlKDbcoy11vwMUwKaZYcUeXQOI674DnzItuMk/zsa6TPMGxGVeCty7l1EBS50MbiiNwabX8jMtY79mW9+Sfd41YVXF09UC5LpZURS6cmApAy3MRc8nJB0GrF2G+llgZf95RM7zTunKIz2UcY0Lc8gE1x8ppwBI4jjU88wLv7LOGL0xdvRa+PIagguncr/DeBKeFQiBd16M+C3Y9Qxj5F1s6nsdUe78fbHVajzGCZG6sCWQDdd2KudrZSjnnLHsobY+mh3doiB3lVP1gXSqe8xVzK++EtSVJNiqMtnLqzNe1yxW0ZYG6o9H5J8A2pFNFETSwQYJadP/khiJVz6uaiePLwJHc3qtg4aCanAlkAsWqbc36xPDpHoVBBtpgbfsM4avW8/7q2QP92akA5TcTYCcWT1Zr5AwSgkY4IG9TPZuUW1T+z4WZNxdOez3dVJ7QmMbGnP9kv43EtVIoruTigajrbBxoAQQJZAJOk7HRPJDcJpodp3BJCm8E+kWwE+44qOroxxSiDkzH9QMjbjDOxwh5ofHd5SPcuSLuVnxtNqYagCRtjNi2IyArrDxN/+2uwY6KcmcGl90rC+iUckCWaxG8CWHZHEkz/INLRhRY1gSRlZ6nXevH5KKp8eYCqTvGAJjPYkAaDt+O8pgIDFbZesBKN35nuDzjVIpZEM9k3vzT6OMUixCEhGiqQypegyOMGx9DQavF8kgS8ACsCWQDVNNkzKclkOsrpI4Pbul32sULTP0aDc2/AuynwkN+YtKtGHL8g0CzpZ6Sfdn29PyWLz6v/G/EnRchRUSzbyZItS5CRecAK6/IzQ8VkyCk4fScjHQP8giKe";
-            pfLpu = "D28C9670D6B19989BEEAB5D17FF3971EC25BA13E0E90DE29FADB633C567D431A6F1C798143DAD534C1BCE1D697AC88705EFEA6F488B97ED239BA98ADA942D1C06CE03FECD7B9B438CCA0B0681DA080294A718B733A6F345569F229AFBAE092DAF264BF00B82890A51DCDB6EB56F0E8E9CBFE95E17924E4E0E848AB63CDAAB92B3AE829E49F8A12FAE1C319CF4BE59C9002C90662C1A3B577309B21C6C31E6B15A568BD7FCD67EE0A33F6FE1A7B281123";
+            pr = "M1IIDTQIBADANBgkqhkiG9w0BAQEFAASCAzcwggMzAgEAAoGxAJl7xSSvTEMJ6EnyD55hKnrYuFTWGdBW7LRJUt37YqF3NsiiaYDRBLGWL5gfFrkqU81KJ6Q+tMxBWfGYnPW7zNUBIAqL2/hFcXhfmfF6uQPYTEsmi2urYrovCsLJbciYWLTK4nKhYfAT7th3om9n1M7MdQoOrZzt9g0t6gc9Hl+C8xfn6t4V8O78dp0w9ix+mBpA4Tw29V5vWQkl6sm+yoeNV562sYZVJcOj22XQZ9BnAgEDAoGwZlKDbcoy11vwMUwKaZYcUeXQOI674DnzItuMk/zsa6TPMGxGVeCty7l1EBS50MbiiNwabX8jMtY79mW9+Sfd41YVXF09UC5LpZURS6cmApAy3MRc8nJB0GrF2G+llgZf95RM7zTunKIz2UcY0Lc8gE1x8ppwBI4jjU88wLv7LOGL0xdvRa+PIagguncr/DeBKeFQiBd16M+C3Y9Qxj5F1s6nsdUe78fbHVajzGCZG6sCWQDdd2KudrZSjnnLHsobY+mh3doiB3lVP1gXSqe8xVzK++EtSVJNiqMtnLqzNe1yxW0ZYG6o9H5J8A2pFNFETSwQYJadP/khiJVz6uaiePLwJHc3qtg4aCanAlkAsWqbc36xPDpHoVBBtpgbfsM4avW8/7q2QP92akA5TcTYCcWT1Zr5AwSgkY4IG9TPZuUW1T+z4WZNxdOez3dVJ7QmMbGnP9kv43EtVIoruTigajrbBxoAQQJZAJOk7HRPJDcJpodp3BJCm8E+kWwE+44qOroxxSiDkzH9QMjbjDOxwh5ofHd5SPcuSLuVnxtNqYagCRtjNi2IyArrDxN/+2uwY6KcmcGl90rC+iUckCWaxG8CWHZHEkz/INLRhRY1gSRlZ6nXevH5KKp8eYCqTvGAJjPYkAaDt+O8pgIDFbZesBKN35nuDzjVIpZEM9k3vzT6OMUixCEhGiqQypegyOMGx9DQavF8kgS8ACsCWQDVNNkzKclkOsrpI4Pbul32sULTP0aDc2/AuynwkN+YtKtGHL8g0CzpZ6Sfdn29PyWLz6v/G/EnRchRUSzbyZItS5CRecAK6/IzQ8VkyCk4fScjHQP8giKe";
+            pfLpu = "D128C9670D6B19989BEEAB5D17FF3971EC25BA13E0E90DE29FADB633C567D431A6F1C798143DAD534C1BCE1D697AC88705EFEA6F488B97ED239BA98ADA942D1C06CE03FECD7B9B438CCA0B0681DA080294A718B733A6F345569F229AFBAE092DAF264BF00B82890A51DCDB6EB56F0E8E9CBFE95E17924E4E0E848AB63CDAAB92B3AE829E49F8A12FAE1C319CF4BE59C9002C90662C1A3B577309B21C6C31E6B15A568BD7FCD67EE0A33F6FE1A7B281123";
 
             //公钥 私钥
             RsaPrivateCrtKeyParameters privateKeyParam = (RsaPrivateCrtKeyParameters)PrivateKeyFactory.CreateKey(Convert.FromBase64String(pr));
@@ -124,6 +126,44 @@ namespace PFPays
             BigInteger mod2 = new BigInteger(pfLpu, 16);
             BigInteger pub2 = new BigInteger("03", 16);
             RsaKeyParameters pulickKeyLP = new RsaKeyParameters(false, mod2, pub2);
+
+            //string r = "35C118B60DB38B20BA8A93CE5C2DEC61782C2855E6BBCF4C42DEE960BE9A7328AD1E8E66D6E35C8E38482DFE707792B6EFA73AA9E69FEFD7BCC4B08EB83E7CFF6BFE4B61B92267645C53F68E5C54DAAD88DD3820337BBFB2EFA356A6169BADED9C14CB1D41D7C0070164190BF5FE5C52BD645E332C62704BF881D3B33F5C9C4122BC204181B453C5D14A6B1EAEB5AE90F4AF54AD91F4C1EC3BE9ED5C002CC972E5927061207A9E2FA1AB3406A5133445";
+            //string a = "{\"bigOrderDate\":\"20170415\",\"bigOrderNo\":\"1170415034103463\",\"bigReqNo\":\"1170415034103463\",\"orderStatus\":\"B\",\"bigOrderAmt\":\"20000\",\"bigPayAmt\":\"20000\",\"innerTranSeq\":\"20170415034106371829\",\"respCode\":\"0000\",\"respMsg\":\"成功\"}";
+            //bool isPassA = ValitedSignX(r, a, pulickKeyLP);
+
+            string rk = "{\"bigOrderDate\":\"20170425\",\"bigOrderNo\":\"1170425023124230\",\"bigReqNo\":\"1170425023124230\",\"orderStatus\":\"B\",\"bigOrderAmt\":\"617800\",\"bigPayAmt\":\"617800\",\"innerTranSeq\":\"20170425143140416947\",\"respCode\":\"0000\",\"respMsg\":\"成功\"}&sign=8F8B7EA600D1C8BDA17FC713AB3AC97FA549580A3198446A598ABB62C89DA951BA650A5C9F3516C2989E197FD7E37F45BB3879331F5D5C28E5798BBD76419136F9E7ECCF65EDEB9A182B9FB0EEFDD995E2058BC817715962FB7151F587DB661AE5F946B6AAEE2EE00EF0505EE8F8D52D8EA1673BD4D10FB0167817BD88968A62B3EB7A695CCF7287FD40FFDFB9A71C3E250B80F1191A952654F91EF086ED204565BC4A0BAC1F920079D00676359F2E81";
+            string[] resultR = rk.Trim().Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
+            if (resultR.Length == 2)
+            {
+                string RResult = resultR[0];
+                string RSignParam = resultR[1];
+                JsonData jdP = JsonMapper.ToObject(RResult.Trim());
+                if (jdP.Count > 0)
+                {
+                    string RrespCode = Convert.ToString(jdP["respCode"]);//响应码
+                    string RrespMsg = Convert.ToString(jdP["respMsg"]);//响应描述
+                    string RbigOrderDate = string.Empty;
+                    string RbigOrderNo = string.Empty;
+                    string RbigReqNo = string.Empty;
+                    string RorderStatus = string.Empty;
+                    string RbigOrderAmt = string.Empty;
+                    string RbigPayAmt = string.Empty;
+                    string RinnerTranSeq = string.Empty;
+                    if (RrespCode == "0000")
+                    {
+                        RbigOrderDate = Convert.ToString(jdP["bigOrderDate"]);//总订单日期 格式：YYYYMMDD
+                        RbigOrderNo = Convert.ToString(jdP["bigOrderNo"]);//总订单号唯一标识
+                        RbigReqNo = Convert.ToString(jdP["bigReqNo"]);//总订单请求流水号唯一标识
+                        RorderStatus = Convert.ToString(jdP["orderStatus"]);//订单状态 A请求 B成功 C请求 D待支付
+                        RbigOrderAmt = Convert.ToString(jdP["bigOrderAmt"]);//总订单金额 单位：分
+                        RbigPayAmt = Convert.ToString(jdP["bigPayAmt"]);//总支付金额 单位：分
+                        RinnerTranSeq = Convert.ToString(jdP["innerTranSeq"]);//支付平台内部流水号
+                    }
+                    //解密
+                    bool isCheck = ValitedSignX(RSignParam.Trim().Split('=')[1], RResult, pulickKeyLP);//pulickKeyL
+                    //log.Info("调用浦发快捷查询接口解密结果：" + isCheck);
+                }
+            }
 
             //string mJson = "0440012.0.00310010021070612017-03-29T16:44:3601{\"respCode\":\"0000\",\"respMsg\":\"成功\",\"bigOrderDate\":\"2017-03-29\",\"bigOrderStatus\":\"B\",\"bigOrderNo\":\"888820170316103500666675\",\"bigOrderReqNo\":\"888820170316103500666675\",\"bigOrderAmt\":\"100\",\"marketAmt\":\"\",\"bigOrderDealDateTime\":\"2017-03-29T16:44:36\",\"innerTransNo\":\"20170329163959510635\"}";
             //string mSign = "5FE5CD1739BDBA51C90612A7C3F8D956";
